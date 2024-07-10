@@ -1,5 +1,6 @@
 import {
   registerUserWithEmailPassword,
+  logInWithEmailAndPassword,
   signInWithGoogle,
 } from "../../firebase/provider";
 import { checkingCredentials, login, logout } from "./";
@@ -40,5 +41,17 @@ export const startCreatingUserWithEmailPassword = ({
     if (!ok) return dispatch(logout({ errorMessage }));
 
     dispatch(login({ uid, email, displayName, photoURL }));
+  };
+};
+
+export const startLogInWithEmailPassword = ({ email, password }) => {
+  return async (dispatch) => {
+    dispatch(checkingCredentials());
+
+    const result = await logInWithEmailAndPassword({ email, password });
+
+    if (!result.ok) return dispatch(logout(result));
+
+    dispatch(login(result));
   };
 };

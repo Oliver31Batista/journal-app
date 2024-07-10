@@ -3,6 +3,7 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   updateProfile,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 import { FirebaseAuth } from "./config";
 
@@ -50,7 +51,7 @@ export const registerUserWithEmailPassword = async ({
     //todo: display the user name on firebase
     await updateProfile(FirebaseAuth.currentUser, {
       displayName,
-    })
+    });
 
     return {
       ok: true,
@@ -60,8 +61,27 @@ export const registerUserWithEmailPassword = async ({
       email,
     };
   } catch (error) {
-
     // errorMessage : 'Can be personalized'
+    return { ok: false, errorMessage: error.message };
+  }
+};
+
+export const logInWithEmailAndPassword = async ({ email, password }) => {
+  try {
+    const resp = await signInWithEmailAndPassword(
+      FirebaseAuth,
+      email,
+      password
+    );
+    const { uid, photoURL, displayName } = resp.user;
+
+    return {
+      ok: true,
+      uid,
+      displayName,
+      photoURL,
+    };
+  } catch (error) {
     return { ok: false, errorMessage: error.message };
   }
 };
