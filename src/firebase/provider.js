@@ -60,7 +60,8 @@ export const registerUserWithEmailPassword = async ({
       email,
     };
   } catch (error) {
-    console.log(error);
+
+    // errorMessage : 'Can be personalized'
     return { ok: false, errorMessage: error.message };
   }
 };
