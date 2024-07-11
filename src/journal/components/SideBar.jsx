@@ -12,8 +12,11 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useSelector } from "react-redux";
 
 export const SideBar = ({ drawerWith }) => {
+  const { displayName } = useSelector((state) => state.auth);
+
   return (
     <Box
       component="nav"
@@ -29,31 +32,29 @@ export const SideBar = ({ drawerWith }) => {
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
-            Oliver Batista
+            {displayName}
           </Typography>
         </Toolbar>
         <Divider />
 
         <List>
-          {["January", "February", "March", "April"].map(
-            (text) => (
-              <ListItem key={text}>
-                <ListItemButton>
-                  <ListItemIcon>
-                    <TurnedInNot />
-                  </ListItemIcon>
-                  <Grid container>
-                    <ListItemText primary={text} />
-                    <ListItemText
-                      secondary={
-                        "  Lorem ipsum dolor sit amet consectetur adipisicing elit."
-                      }
-                    />
-                  </Grid>
-                </ListItemButton>
-              </ListItem>
-            )
-          )}
+          {["January", "February", "March", "April"].map((text) => (
+            <ListItem key={text}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <TurnedInNot />
+                </ListItemIcon>
+                <Grid container>
+                  <ListItemText primary={text} />
+                  <ListItemText
+                    secondary={
+                      "  Lorem ipsum dolor sit amet consectetur adipisicing elit."
+                    }
+                  />
+                </Grid>
+              </ListItemButton>
+            </ListItem>
+          ))}
         </List>
       </Drawer>
     </Box>
