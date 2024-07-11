@@ -9,6 +9,7 @@ export const NoteView = () => {
       justifyContent="space-between"
       alignItems="center"
       sx={{ mb: 1 }}
+      className="animate__animated animate__fadeIn animate__faster"
     >
       <Grid item>
         <Typography fontSize={39} fontWeight="light">
@@ -32,7 +33,7 @@ export const NoteView = () => {
           label="Title"
           sx={{ border: "none", mb: 1 }}
         />
-        
+
         <TextField
           type="text"
           variant="filled"
