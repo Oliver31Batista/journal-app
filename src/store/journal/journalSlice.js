@@ -31,12 +31,11 @@ export const journalSlice = createSlice({
     },
     setSaving: (state) => {
       state.isSaving = true;
-      //todo: error message
+      state.savedMessage = "";
     },
     updateNote: (state, action) => {
       state.isSaving = false;
       state.notes = state.notes.map((note) => {
-
         if (note.id === action.payload.id) {
           return action.payload;
         }
@@ -44,7 +43,7 @@ export const journalSlice = createSlice({
         return note;
       });
 
-      //todo: show actualization message
+      state.savedMessage = `${action.payload.title}, correctly updated`;
     },
     deleteNoteById: (state, action) => {},
   },

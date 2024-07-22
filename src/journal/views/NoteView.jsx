@@ -6,10 +6,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useMemo } from "react";
 import { setActiveNote } from "../../store/journal/journalSlice";
 import { startSaveNote } from "../../store/journal/thunks";
+import Swal from "sweetalert2";
 
 export const NoteView = () => {
   const dispatch = useDispatch();
-  const { activeNote } = useSelector((state) => state.journal);
+  const { activeNote, savedMessage, isSaving } = useSelector(
+    (state) => state.journal
+  );
   const { body, title, date, onInputChange, formState } = useForm(activeNote);
 
   const dateString = useMemo(() => {
@@ -20,10 +23,16 @@ export const NoteView = () => {
   useEffect(() => {
     dispatch(setActiveNote(formState));
   }, [formState]);
-  
-  const onSaveNote=()=>{
+
+  useEffect(() => {
+    if (savedMessage.length > 0) {
+      Swal.fire("Note updated", savedMessage, "success");
+    }
+  }, [savedMessage]);
+
+  const onSaveNote = () => {
     dispatch(startSaveNote());
-  }
+  };
 
   return (
     <Grid
@@ -40,7 +49,12 @@ export const NoteView = () => {
       </Grid>
 
       <Grid item>
-        <Button onClick={onSaveNote} color="primary" sx={{ padding: 2 }}>
+        <Button
+          disabled={isSaving}
+          onClick={onSaveNote}
+          color="primary"
+          sx={{ padding: 2 }}
+        >
           <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
           Save
         </Button>
