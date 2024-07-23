@@ -11,12 +11,9 @@ export const fileUpload = async (file) => {
       body: formData,
     });
 
-    console.log(resp);
-
     if (!resp.ok) throw new Error("Failed to upload file");
 
     const cloudResp = await resp.json();
-    console.log(cloudResp);
 
     return cloudResp.secure_url;
   } catch (error) {
